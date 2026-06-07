@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Huellitas de Perros - Veterinaria</title>
+<style>
+    :root {
+        --morado: #7C3AED;
+        --naranja: #F59E0B;
+        --cafe: #92400E;
+        --verde: #059669;
+        --celeste: #BAE6FD;
+        --beige: #FEF3C7;
+    }
+
+    body {
+        font-family: 'Segoe UI', Arial, sans-serif;
+        background: #FFF7ED;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* HEADER */
+    header {
+        background: linear-gradient(135deg, var(--naranja) 0%, var(--cafe) 100%);
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(146, 64, 14, 0.3);
+        color: white;
+    }
+
+    .header-content {
+        max-width: 900px;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .logo {
+        width: 80px;
+        height: 80px;
+        background: white;
+        border-radius: 50%;
+        padding: 8px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .titulo {
+        flex: 1;
+    }
+
+    .titulo h1 {
+        margin: 0;
+        font-size: 2em;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .titulo p {
+        margin: 5px 0 0 0;
+        opacity: 0.9;
+        font-size: 0.95em;
+    }
+
+    /* BANNER */
+    .banner {
+        width: 100%;
+        max-width: 900px;
+        margin: 25px auto;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(124, 58, 237, 0.2);
+    }
+
+    .banner img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    /* CONTENIDO */
+    .container {
+        max-width: 800px;
+        margin: 30px auto;
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(146, 64, 14, 0.15);
+    }
+    
+    h2 {
+        text-align: center;
+        color: var(--cafe);
+        border-bottom: 3px solid var(--naranja);
+        padding-bottom: 8px;
+        margin-bottom: 20px;
+    }
+    
+    h3 {
+        color: var(--verde);
+        margin-top: 20px;
+    }
+    
+    .menu {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 25px;
+    }
+    
+    button {
+        padding: 14px 14px 14px 45px;
+        font-size: 15px;
+        font-weight: bold;
+        border: none;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--naranja) 0%, var(--verde) 100%);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+        position: relative;
+        text-align: left;
+    }
+    
+    button::before {
+        content: "🐾";
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.4em;
+    }
+    
+    button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 15px rgba(245, 158, 11, 0.5);
+        background: linear-gradient(135deg, var(--verde) 0%, var(--cafe) 100%);
+    }
+    
+    button.salir {
+        background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+        grid-column: span 2;
+    }
+    
+    button.salir::before {
+        content: "🚪";
+    }
+    
+    .ventana {
+        display: none;
+        margin-top: 20px;
+        padding: 20px;
+        border: 2px solid var(--beige);
+        border-radius: 10px;
+        background: linear-gradient(180deg, #FFFFFF 0%, var(--beige) 100%);
+        animation: fadeIn 0.4s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    label {
+        display: block;
+        margin-top: 12px;
+        font-weight: bold;
+        color: var(--cafe);
+    }
+    
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        box-sizing: border-box;
+        border-radius: 6px;
+        border: 2px solid #FED7AA;
+        transition: border 0.3s;
+    }
+    
+    input:focus, select:focus {
+        outline: none;
+        border-color: var(--naranja);
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+    
+    .resultado {
+        margin-top: 15px;
+        padding: 15px;
+        background: #FFEDD5;
+        border-left: 4px solid var(--naranja);
+        border-radius: 6px;
+        white-space: pre-wrap;
+        color: #451A03;
+    }
+
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: var(--cafe);
+        color: white;
+        margin-top: 40px;
+        font-size: 0.9em;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <div class="header-content">
+        <div class="logo">
+            <img src="logo.png" alt="Huellitas de Perros">
+        </div>
+        <div class="titulo">
+            <h1>🐾 Huellitas de Perros</h1>
+            <p>Sistema Veterinario Integral</p>
+        </div>
+    </div>
+</header>
+
+<!-- BANNER AQUÍ -->
+<div class="banner">
+    <img src="attachment://0" alt="Registro de vacunación y esterilización">
+</div>
+
+<div class="container">
+    <h2>MENU PRINCIPAL</h2>
+    <div class="menu">
+        <button onclick="mostrarVentana('registrar')">Registrar mascota</button>
+        <button onclick="mostrarVentana('buscar')">Buscar mascota</button>
+        <button onclick="mostrarVentana('vacunar')">Aplicar vacuna</button>
+        <button onclick="mostrarVentana('centros')">Centros de vacunación</button>
+        <button onclick="mostrarVentana('descuentos')">Ver descuentos</button>
+        <button onclick="mostrarVentana('esterilizar')">Esterilización</button>
+        <button class="salir" onclick="alert('Cierra la pestaña para salir')">Salir</button>
+    </div>
+
+    <!-- Tus ventanas siguen igual... -->
+    <div id="registrar" class="ventana">
+        <h2>REGISTRAR MASCOTA</h2>
+        <h3>--- DATOS MASCOTA ---</h3>
+        <label>Nombre:</label><input type="text" id="r_nombre">
+        <label>Especie (Perro/Gato):</label><input type="text" id="r_especie">
+        <label>Edad:</label><input type="number" id="r_edad">
+        <label>Unidad:</label>
+        <select id="r_unidad"><option>Meses</option><option>Años</option></select>
+        <label>Tamaño:</label><input type="text" id="r_tamano">
+        <label>Peso:</label><input type="number" step="0.1" id="r_peso">
+        <label>Raza:</label><input type="text" id="r_raza">
+        <label>Enfermedad:</label><input type="text" id="r_enfermedad">
+        <h3>--- DATOS DUEÑO ---</h3>
+        <label>Nombre dueño:</label><input type="text" id="r_dueno">
+        <label>Telefono:</label><input type="text" id="r_telefono">
+        <label>Direccion:</label><input type="text" id="r_direccion">
+        <label>Ciudad:</label><input type="text" id="r_ciudad">
+        <button onclick="registrarMascota()">Registrar</button>
+        <div id="r_resultado" class="resultado"></div>
+    </div>
+
+    <div id="buscar" class="ventana">
+        <h2>BUSCAR MASCOTA</h2>
+        <label>ID de la mascota:</label><input type="number" id="b_id">
+        <button onclick="buscarMascota()">Buscar</button>
+        <div id="b_resultado" class="resultado"></div>
+    </div>
+
+    <div id="vacunar" class="ventana">
+        <h2>APLICAR VACUNA</h2>
+        <label>ID mascota:</label><input type="number" id="v_id">
+        <label>Vacuna aplicada:</label><input type="text" id="v_vacuna">
+        <button onclick="aplicarVacuna()">Aplicar</button>
+        <div id="v_resultado" class="resultado"></div>
+    </div>
+
+   <div id="centros" class="ventana">
+    <h2>CENTROS DE VACUNACIÓN</h2>
+
+    <label>Estado:</label>
+
+    <select id="c_estado">
+
+        <option value="">Seleccione un estado</option>
+
+        <option>Aguascalientes</option>
+        <option>Baja California</option>
+        <option>Baja California Sur</option>
+        <option>Campeche</option>
+        <option>Chiapas</option>
+        <option>Chihuahua</option>
+        <option>Ciudad de México</option>
+        <option>Coahuila</option>
+        <option>Colima</option>
+        <option>Durango</option>
+        <option>Estado de México</option>
+        <option>Guanajuato</option>
+        <option>Guerrero</option>
+        <option>Hidalgo</option>
+        <option>Jalisco</option>
+        <option>Michoacán</option>
+        <option>Morelos</option>
+        <option>Nayarit</option>
+        <option>Nuevo León</option>
+        <option>Oaxaca</option>
+        <option>Puebla</option>
+        <option>Querétaro</option>
+        <option>Quintana Roo</option>
+        <option>San Luis Potosí</option>
+        <option>Sinaloa</option>
+        <option>Sonora</option>
+        <option>Tabasco</option>
+        <option>Tamaulipas</option>
+        <option>Tlaxcala</option>
+        <option>Veracruz</option>
+        <option>Yucatán</option>
+        <option>Zacatecas</option>
+
+    </select>
+
+    <button onclick="verCentros()">
+        Ver Centros
+    </button>
+
+    <div id="c_resultado" class="resultado"></div>
+
+</div>
+        <div id="descuentos" class="ventana">
+        <h2>DESCUENTOS</h2>
+        <div id="d_resultado" class="resultado"></div>
+    </div>
+
+    <div id="esterilizar" class="ventana">
+        <h2>ESTERILIZACIÓN</h2>
+        <label>ID mascota:</label><input type="number" id="e_id">
+        <button onclick="esterilizarMascota()">Esterilizar</button>
+        <div id="e_resultado" class="resultado"></div>
+    </div>
+</div>
+
+<footer>
+    © 2026 Huellitas de Perros - Cuidamos a tus mejores amigos 🐾
+</footer>
+
+<script>
+// Aquí va todo tu JavaScript igual que antes, sin cambios
+class Dueno {
+    constructor(nombre, telefono, direccion, ciudad) {
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.direccion = direccion;
+        this.ciudad = ciudad;
+    }
+    mostrarDatos() {
+        return `Dueño: ${this.nombre}\nTelefono: ${this.telefono}\nDireccion: ${this.direccion}\nCiudad: ${this.ciudad}`;
+    }
+}
+
+class Mascota {
+    constructor(id, nombre, especie, edadMeses, tamano, peso, raza, enfermedad, dueno) {
+        this.id = id;
+        this.nombre = nombre;
+        this.especie = especie;
+        this.edadMeses = edadMeses;
+        this.tamano = tamano;
+        this.peso = peso;
+        this.raza = raza;
+        this.enfermedad = enfermedad;
+        this.dueno = dueno;
+        this.esterilizada = false;
+        this.vacunas = [];
+    }
+    mostrarDatos() {
+        let edadTxt = this.edadMeses >= 12 ? 
+            `${Math.floor(this.edadMeses/12)} años` : 
+            `${this.edadMeses} meses`;
+        return `----- DATOS DE LA MASCOTA -----
+ID: ${this.id}
+Nombre: ${this.nombre}
+Especie: ${this.especie}
+Edad: ${edadTxt}
+Tamaño: ${this.tamano}
+Peso: ${this.peso}
+Raza: ${this.raza}
+Enfermedad: ${this.enfermedad}
+Esterilizada: ${this.esterilizada}
+Vacunas: ${JSON.stringify(this.vacunas)}
+
+----- DATOS DEL DUEÑO -----
+${this.dueno.mostrarDatos()}`;
+    }
+}
+
+class Veterinaria {
+    constructor() {
+        this.mascotas = [];
+        this.siguienteId = 1;
+    }
+    registrarMascota(nombre, especie, edad, unidad, tamano, peso, raza, enfermedad, nombreDueno, telefono, direccion, ciudad) {
+        let dueno = new Dueno(nombreDueno, telefono, direccion, ciudad);
+        let edadMeses = unidad === "Años" ? parseInt(edad)*12 : parseInt(edad);
+        let mascota = new Mascota(this.siguienteId, nombre, especie, edadMeses, tamano, parseFloat(peso), raza, enfermedad, dueno);
+        this.mascotas.push(mascota);
+        return `Mascota registrada correctamente. ID asignado: ${this.siguienteId++}`;
+    }
+    buscarMascota(id) {
+        let m = this.mascotas.find(x => x.id == id);
+        return m ? m.mostrarDatos() : "Mascota no encontrada";
+    }
+    aplicarVacuna(id, vacuna) {
+        let m = this.mascotas.find(x => x.id == id);
+        if (m) {
+            m.vacunas.push(vacuna);
+            return `Vacuna registrada para ${m.nombre}`;
+        }
+        return "Mascota no encontrada";
+    }
+    esterilizarMascota(id) {
+        let m = this.mascotas.find(x => x.id == id);
+        if (m) {
+            if (m.edadMeses >= 6) {
+                m.esterilizada = true;
+                return `Esterilización registrada para ${m.nombre}`;
+            } else {
+                return "La mascota aún no cumple la edad recomendada";
+            }
+        }
+        return "Mascota no encontrada";
+    }
+    mostrarDescuentos() {
+        return `------ DESCUENTOS ------
+1. Vacuna antirrábica con 20% de descuento
+2. Vacuna triple felina con juguete gratis
+3. Baño gratis en la segunda vacuna
+4. Consulta gratis en vacunación completa`;
+    }
+   }
+
+const vet = new Veterinaria();
+
+function mostrarVentana(id) {
+    document.querySelectorAll('.ventana').forEach(v => v.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+    if (id === 'descuentos') {
+        document.getElementById('d_resultado').textContent = vet.mostrarDescuentos();
+    }
+}
+
+function registrarMascota() {
+    try {
+        let res = vet.registrarMascota(
+            document.getElementById('r_nombre').value,
+            document.getElementById('r_especie').value,
+            document.getElementById('r_edad').value,
+            document.getElementById('r_unidad').value,
+            document.getElementById('r_tamano').value,
+            document.getElementById('r_peso').value,
+            document.getElementById('r_raza').value,
+            document.getElementById('r_enfermedad').value,
+            document.getElementById('r_dueno').value,
+            document.getElementById('r_telefono').value,
+            document.getElementById('r_direccion').value,
+            document.getElementById('r_ciudad').value
+        );
+        document.getElementById('r_resultado').textContent = res;
+        document.querySelectorAll('#registrar input[type=text], #registrar input[type=number]').forEach(i => i.value = '');
+    } catch {
+        document.getElementById('r_resultado').textContent = "Error: Edad y Peso deben ser números";
+    }
+}
+
+function buscarMascota() {
+    let id = document.getElementById('b_id').value;
+    document.getElementById('b_resultado').textContent = vet.buscarMascota(id);
+}
+
+function aplicarVacuna() {
+    let id = document.getElementById('v_id').value;
+    let vacuna = document.getElementById('v_vacuna').value;
+    document.getElementById('v_resultado').textContent = vet.aplicarVacuna(id, vacuna);
+    document.getElementById('v_id').value = '';
+    document.getElementById('v_vacuna').value = '';
+}
+
+function verCentros() {
+
+    let estado = document.getElementById("c_estado").value;
+
+    if (estado == "") {
+
+        document.getElementById("c_resultado").textContent =
+        "Seleccione un estado";
+
+        return;
+    }
+
+    document.getElementById("c_resultado").textContent =
+    "Buscando centros de vacunación en " + estado + "...";
+
+    window.open(
+        "https://www.google.com/maps/search/centros+de+vacunacion+veterinaria+" +
+        encodeURIComponent(estado + " Mexico"),
+        "_blank"
+    );
+}
+
+function esterilizarMascota() {
+    let id = document.getElementById('e_id').value;
+    document.getElementById('e_resultado').textContent = vet.esterilizarMascota(id);
+}
+</script>
+</body>
+</html>
